@@ -1,0 +1,12 @@
+[
+  {
+    "outputFileName": "script.min.js",
+    "inputFiles": [
+      "script.js"
+    ],
+    "minify": {
+      "enabled": true
+    },
+    "sourceMap": false
+  }
+]
