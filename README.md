@@ -4,7 +4,7 @@
 
 This is a yet another CSS live reloader for ASP.NET Core App as an ASP.NET Core middleware.
 
-![fig.1](https://github.com/jsakamoto/Toolbelt.AspNetCore.CssLiveReloader/blob/master/.assets/fig1.gif)
+![fig.1](https://raw.githubusercontent.com/jsakamoto/Toolbelt.AspNetCore.CssLiveReloader/master/.assets/fig1.gif)
 
 There are already many live reloading solutions.  
 However, instead of this middleware works for only CSS files, it reload styles **more smoothly** rather than other solutions. 
