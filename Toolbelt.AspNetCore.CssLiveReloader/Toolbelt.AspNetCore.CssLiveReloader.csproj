@@ -19,6 +19,7 @@
 v.1.0.0
 - 1st release.
 </PackageReleaseNotes>
+    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
