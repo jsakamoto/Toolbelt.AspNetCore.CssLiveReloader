@@ -9,12 +9,14 @@
     <PackageOutputPath>..\_dist\</PackageOutputPath>
     <Copyright>Copyright © 2020 J.Sakamoto, Mozilla Public License 2.0</Copyright>
     <Authors>J.Sakamoto</Authors>
-    <Version>1.0.0.0</Version>
+    <Version>1.0.1.0</Version>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.AspNetCore.CssLiveReloader/</PackageProjectUrl>
     <Description>CSS only live reloader library for ASP.NET Core (includes Blazor).</Description>
     <PackageTags>blazor,live-reload</PackageTags>
-    <PackageReleaseNotes>v.1.0.0
+    <PackageReleaseNotes>v.1.0.1
+- Fix: CSS live reloading doesn't work sometimes due to rely on browser's cache state.
+v.1.0.0
 - 1st release.
 </PackageReleaseNotes>
   </PropertyGroup>
