@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 {
@@ -12,10 +13,32 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 
         private readonly Dictionary<string, FileSystemWatcher> _fileSystemWatchers = new Dictionary<string, FileSystemWatcher>();
 
+        private readonly CssLiveReloaderOptions _options;
+
         public event EventHandler<CssFileChangedEventArgs> CssFileChanged;
 
-        public CssFileWatcherService()
+        public CssFileWatcherService(CssLiveReloaderOptions cssLiveReloadOptions)
         {
+            this._options = cssLiveReloadOptions;
+        }
+
+        public void TryAddWatch(string url)
+        {
+            var requestPath = PathString.FromUriComponent(new Uri(url));
+            this.TryAddWatch(url, () =>
+            {
+                lock (this._options.FileMappings)
+                {
+                    foreach (var fileMapping in _options.FileMappings)
+                    {
+                        if (!requestPath.StartsWithSegments(fileMapping.MatchUrl, out var subpath)) continue;
+                        var fileInfo = fileMapping.FileProvider.GetFileInfo(subpath.Value);
+                        if (!fileInfo.Exists) continue;
+                        return fileInfo.PhysicalPath;
+                    }
+                    return null;
+                }
+            });
         }
 
         public void TryAddWatch(string url, Func<string> getPyhisicalPath)

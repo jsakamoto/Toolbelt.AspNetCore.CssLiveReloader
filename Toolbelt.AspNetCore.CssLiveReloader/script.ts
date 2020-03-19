@@ -1,8 +1,11 @@
 ﻿namespace Toolbelt.AspNetCore.CssLiveReloader {
 
-    const conn = new EventSource('/Toolbelt.AspNetCore.CssLiveReloader/EventSource');
+    const apiBase = '/Toolbelt.AspNetCore.CssLiveReloader/';
+    const conn = new EventSource(apiBase + 'EventSource');
 
     const qq: { [key: string]: null[] } = {};
+
+    conn.onopen = onConnected;
 
     conn.addEventListener('css-changed', (ev: any) => {
         const url = ev.data;
@@ -11,10 +14,31 @@
         if (qq[url].length === 1) reloadCSS(url);
     });
 
-    function reloadCSS(url: string): void {
-        const links = document.head.querySelectorAll(`link[rel='stylesheet']`);
+    function getLinks(): NodeListOf<HTMLLinkElement> {
+        return document.head.querySelectorAll(`link[rel='stylesheet']`);
+    }
+
+    function onConnected(): void {
+        const hrefs = [] as string[];
+        const links = getLinks();
         for (let i = 0; i < links.length; i++) {
-            const link = links[i] as HTMLLinkElement;
+            const link = links[i];
+            hrefs.push(stripReloadToken(link.href));
+        }
+        fetch(apiBase + 'WatchRequest', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(hrefs)
+        })
+    }
+
+    function reloadCSS(url: string): void {
+        const links = getLinks();
+        for (let i = 0; i < links.length; i++) {
+            const link = links[i];
             if (stripReloadToken(link.href) === url) {
 
                 const newLink = document.createElement('link');

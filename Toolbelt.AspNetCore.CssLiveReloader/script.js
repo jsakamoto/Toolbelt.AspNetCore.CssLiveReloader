@@ -5,8 +5,10 @@ var Toolbelt;
     (function (AspNetCore) {
         var CssLiveReloader;
         (function (CssLiveReloader) {
-            const conn = new EventSource('/Toolbelt.AspNetCore.CssLiveReloader/EventSource');
+            const apiBase = '/Toolbelt.AspNetCore.CssLiveReloader/';
+            const conn = new EventSource(apiBase + 'EventSource');
             const qq = {};
+            conn.onopen = onConnected;
             conn.addEventListener('css-changed', (ev) => {
                 const url = ev.data;
                 if (typeof (qq[url]) === 'undefined')
@@ -15,8 +17,27 @@ var Toolbelt;
                 if (qq[url].length === 1)
                     reloadCSS(url);
             });
+            function getLinks() {
+                return document.head.querySelectorAll(`link[rel='stylesheet']`);
+            }
+            function onConnected() {
+                const hrefs = [];
+                const links = getLinks();
+                for (let i = 0; i < links.length; i++) {
+                    const link = links[i];
+                    hrefs.push(stripReloadToken(link.href));
+                }
+                fetch(apiBase + 'WatchRequest', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(hrefs)
+                });
+            }
             function reloadCSS(url) {
-                const links = document.head.querySelectorAll(`link[rel='stylesheet']`);
+                const links = getLinks();
                 for (let i = 0; i < links.length; i++) {
                     const link = links[i];
                     if (stripReloadToken(link.href) === url) {

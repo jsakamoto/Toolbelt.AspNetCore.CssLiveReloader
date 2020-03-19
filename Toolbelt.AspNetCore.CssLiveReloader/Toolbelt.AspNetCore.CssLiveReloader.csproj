@@ -41,6 +41,7 @@
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.435">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="System.Text.Json" Version="4.7.1" />
   </ItemGroup>
 
 </Project>

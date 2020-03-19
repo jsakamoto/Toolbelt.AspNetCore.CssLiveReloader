@@ -22,6 +22,10 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 
             _context.Response.ContentType = "text/event-stream";
 
+            var bytes = Encoding.ASCII.GetBytes($"event: connected\n\n");
+            await _context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+            await _context.Response.Body.FlushAsync();
+
             var waiter = new TaskCompletionSource<object>();
             _context.RequestAborted.Register(() => waiter.TrySetResult(null));
             await waiter.Task;
