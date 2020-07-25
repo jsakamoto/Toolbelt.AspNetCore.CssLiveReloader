@@ -42,10 +42,9 @@ That's all!
 - ASP.NET Core 5.0 or later 👉 Css Live Reloader **v.2.x.x**
 - ASP.NET Core 3.1 or later 👉 Css Live Reloader **v.1.x.x**
 
-## Release Note
+## Release Notes
 
-- **v.1.0.1** - Fix: CSS live reloading doesn't work sometimes due to rely on browser's cache state.
-- **v.1.0.0** - 1st release.
+[Release Notes](https://github.com/jsakamoto/Toolbelt.AspNetCore.CssLiveReloader/blob/master/RELEASE-NOTES.txt)
 
 ## License
 
