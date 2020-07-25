@@ -1,0 +1,5 @@
+v.1.0.1
+- Fix: CSS live reloading doesn't work sometimes due to rely on browser's cache state.
+
+v.1.0.0
+- 1st release.

@@ -14,11 +14,7 @@
     <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.AspNetCore.CssLiveReloader/</PackageProjectUrl>
     <Description>CSS only live reloader library for ASP.NET Core (includes Blazor).</Description>
     <PackageTags>blazor,live-reload</PackageTags>
-    <PackageReleaseNotes>v.1.0.1
-- Fix: CSS live reloading doesn't work sometimes due to rely on browser's cache state.
-v.1.0.0
-- 1st release.
-</PackageReleaseNotes>
+    <PackageReleaseNotes>(Please write the package release notes in "../RELEASE-NOTES.txt")</PackageReleaseNotes>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
@@ -46,5 +42,14 @@ v.1.0.0
     </PackageReference>
     <PackageReference Include="System.Text.Json" Version="4.7.1" />
   </ItemGroup>
+
+  <Target Name="BuildPackageReleaseNotes" BeforeTargets="GenerateNuspec">
+    <ReadLinesFromFile File="../RELEASE-NOTES.txt">
+      <Output TaskParameter="Lines" ItemName="ReleaseNoteLines" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <PackageReleaseNotes>@(ReleaseNoteLines, '%0a')</PackageReleaseNotes>
+    </PropertyGroup>
+  </Target>
 
 </Project>
