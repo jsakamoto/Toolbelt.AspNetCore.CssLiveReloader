@@ -6,6 +6,7 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
+    <PackageIcon>nupkg-icon.png</PackageIcon>
     <PackageOutputPath>..\_dist\</PackageOutputPath>
     <Copyright>Copyright © 2020 J.Sakamoto, Mozilla Public License 2.0</Copyright>
     <Authors>J.Sakamoto</Authors>
@@ -17,6 +18,14 @@
     <PackageReleaseNotes>(Please write the package release notes in "../RELEASE-NOTES.txt")</PackageReleaseNotes>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\.assets\nupkg-icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="script.js" />
