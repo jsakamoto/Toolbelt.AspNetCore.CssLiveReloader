@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Toolbelt.Extensions.DependencyInjection;
 
-namespace SampleSite.Server
+namespace SampleSite
 {
     public class Startup
     {
@@ -12,7 +12,6 @@ namespace SampleSite.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -21,20 +20,11 @@ namespace SampleSite.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebAssemblyDebugging();
-
                 app.UseCssLiveReload();
             }
 
-            app.UseBlazorFrameworkFiles();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
-
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapDefaultControllerRoute();
-                endpoints.MapFallbackToFile("index.html");
-            });
         }
     }
 }
