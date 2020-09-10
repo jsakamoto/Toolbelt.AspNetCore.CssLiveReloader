@@ -24,24 +24,31 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
         {
             var filter = new FilterStream(context);
 
-            await _next(context);
-
-            if (filter.IsCaptured())
+            try
             {
-                filter.MemoryStream.Seek(0, SeekOrigin.Begin);
-                var parser = new HtmlParser();
-                using var doc = parser.ParseDocument(filter.MemoryStream);
+                await _next(context);
 
-                doc.Body.Insert(AdjacentPosition.BeforeEnd, $"<script src=\"{_options.ScriptPath}\" type=\"text/javascript\"></script>");
+                if (filter.IsCaptured())
+                {
+                    filter.MemoryStream.Seek(0, SeekOrigin.Begin);
+                    var parser = new HtmlParser();
+                    using var doc = parser.ParseDocument(filter.MemoryStream);
 
-                filter.MemoryStream.SetLength(0);
-                var encoding = Encoding.UTF8;
-                using var writer = new StreamWriter(filter.MemoryStream, bufferSize: -1, leaveOpen: true, encoding: encoding) { AutoFlush = true };
-                doc.ToHtml(writer, new PrettyMarkupFormatter());
+                    doc.Body.Insert(AdjacentPosition.BeforeEnd, $"<script src=\"{_options.ScriptPath}\" type=\"text/javascript\"></script>");
 
-                context.Response.ContentLength = filter.MemoryStream.Length;
-                filter.MemoryStream.Seek(0, SeekOrigin.Begin);
-                await filter.MemoryStream.CopyToAsync(filter.OriginalStream);
+                    filter.MemoryStream.SetLength(0);
+                    var encoding = Encoding.UTF8;
+                    using var writer = new StreamWriter(filter.MemoryStream, bufferSize: -1, leaveOpen: true, encoding: encoding) { AutoFlush = true };
+                    doc.ToHtml(writer, new PrettyMarkupFormatter());
+
+                    context.Response.ContentLength = filter.MemoryStream.Length;
+                    filter.MemoryStream.Seek(0, SeekOrigin.Begin);
+                    await filter.MemoryStream.CopyToAsync(filter.OriginalStream);
+                }
+            }
+            finally
+            {
+                filter.RevertResponseBodyHooking();
             }
         }
     }

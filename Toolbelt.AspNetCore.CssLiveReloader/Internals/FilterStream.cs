@@ -51,6 +51,11 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
             this.FlushAsyncInvoker = DefaultFlushAsyncInvoker;
         }
 
+        public void RevertResponseBodyHooking()
+        {
+            this.HttpContext.Response.Body = this.OriginalStream;
+        }
+
         private Task DefaultWriteAsyncInvoker(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             return RebindInvokers().WriteAsync(buffer, offset, count, cancellationToken);
@@ -96,7 +101,6 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
         {
             base.Dispose(disposing);
             this.MemoryStream.Dispose();
-            this.OriginalStream.Dispose();
         }
     }
 }
