@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Toolbelt.AspNetCore.CssLiveReloader\Toolbelt.AspNetCore.CssLiveReloader.csproj" />
+    <PackageReference Include="Toolbelt.AspNetCore.CssLiveReloader" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

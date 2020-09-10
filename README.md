@@ -37,11 +37,6 @@ public class Startup
 
 That's all!
 
-## Supported ASP.NET Core Version
-
-- ASP.NET Core 5.0 or later 👉 Css Live Reloader **v.2.x.x**
-- ASP.NET Core 3.1 or later 👉 Css Live Reloader **v.1.x.x**
-
 ## Release Notes
 
 [Release Notes](https://github.com/jsakamoto/Toolbelt.AspNetCore.CssLiveReloader/blob/master/RELEASE-NOTES.txt)
