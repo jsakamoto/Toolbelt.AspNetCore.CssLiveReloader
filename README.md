@@ -11,13 +11,13 @@ However, instead of this middleware works for only CSS files, it reload styles *
 
 ## How to use
 
-1. Add `` NuGet package reference to your ASP.NET Core Web App project.
+1. Add `Toolbelt.AspNetCore.CssLiveReloader` NuGet package reference to your ASP.NET Core Web App project.
 
 ```shell
 dotnet add package Toolbelt.AspNetCore.CssLiveReloader
 ```
 
-2. Add `app.UseCssLiveReload();` in your startup code, like this:
+2. After installing this package, **what you have to do is just add one line `app.UseCssLiveReload();`** in your startup code, like this:
 
 ```csharp
 ...
