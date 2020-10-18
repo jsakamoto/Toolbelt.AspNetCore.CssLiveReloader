@@ -32,7 +32,7 @@ public class Startup
     if (env.IsDevelopment())
     {
       ...
-      app.UseCssLiveReload(); // <- Add this!
+      app.UseCssLiveReload(); // 👈 Add this!
 ```
 
 That's all!
