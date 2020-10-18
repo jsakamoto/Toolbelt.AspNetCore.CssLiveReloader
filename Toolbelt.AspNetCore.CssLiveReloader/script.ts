@@ -41,37 +41,32 @@
     }
 
     function reloadCSS(url: string): void {
-        const links = getLinks();
-        for (const link of links) {
-
-            if (stripReloadToken(link.href) === url) {
-
-                const newLink = document.createElement('link');
-                newLink.rel = 'stylesheet';
-                let href = stripReloadToken(link.getAttribute('href')!);
-
-                href += (href.indexOf('?') === -1 ? '?' : '&') + '136bb8a9-b749-47e9-92e7-8b46e4a4f657=' + (new Date().getTime());
-                newLink.href = href;
-
-                newLink.onload = () => {
-                    link.remove();
-                    const timeoutTimerId = qq[url].shift();
-                    if (timeoutTimerId !== null) clearTimeout(timeoutTimerId);
-                    if (qq[url].length > 0) reloadCSS(url);
-                }
-                link.insertAdjacentElement('beforebegin', newLink);
-
-                qq[url][0] = setTimeout(() => {
-                    newLink.remove();
-                    qq[url].shift();
-                    if (qq[url].length > 0) reloadCSS(url);
-                }, 3000);
-
-                return;
-            }
+        const link = getLinks().find(link => stripReloadToken(link.href) === url);
+        if (typeof (link) === 'undefined') {
+            qq[url].shift();
+            return;
         }
 
-        qq[url].shift();
+        const newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        let href = stripReloadToken(link.getAttribute('href')!);
+
+        href += (href.indexOf('?') === -1 ? '?' : '&') + '136bb8a9-b749-47e9-92e7-8b46e4a4f657=' + (new Date().getTime());
+        newLink.href = href;
+
+        newLink.onload = () => {
+            link.remove();
+            const timeoutTimerId = qq[url].shift();
+            if (timeoutTimerId !== null) clearTimeout(timeoutTimerId);
+            if (qq[url].length > 0) reloadCSS(url);
+        }
+        link.insertAdjacentElement('beforebegin', newLink);
+
+        qq[url][0] = setTimeout(() => {
+            newLink.remove();
+            qq[url].shift();
+            if (qq[url].length > 0) reloadCSS(url);
+        }, 3000);
     }
 
     function stripReloadToken(url: string): string {
