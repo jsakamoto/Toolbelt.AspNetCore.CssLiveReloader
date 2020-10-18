@@ -28,12 +28,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="script.js" />
     <None Remove="tsconfig.json" />
     <Content Include="script.js" Pack="false" />
     <Content Include="tsconfig.json" Pack="false" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="script.js" />
+    <EmbeddedResource Include="script.js" Condition=" '$(Configuration)' == 'Debug' " />
     <None Remove="script.min.js" />
     <EmbeddedResource Include="script.min.js" />
   </ItemGroup>

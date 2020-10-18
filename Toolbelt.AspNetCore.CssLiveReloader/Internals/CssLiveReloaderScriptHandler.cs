@@ -7,7 +7,13 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
     {
         public static async Task InvokeAsync(HttpContext context)
         {
-            using var resStream = typeof(CssLiveReloaderScriptHandler).Assembly.GetManifestResourceStream("Toolbelt.AspNetCore.CssLiveReloader.script.min.js");
+            const string resourceName =
+#if DEBUG
+                "Toolbelt.AspNetCore.CssLiveReloader.script.js";
+#else
+                "Toolbelt.AspNetCore.CssLiveReloader.script.min.js";
+#endif
+            using var resStream = typeof(CssLiveReloaderScriptHandler).Assembly.GetManifestResourceStream(resourceName);
             context.Response.ContentType = "text/jsavascript";
             await resStream.CopyToAsync(context.Response.Body);
         }
