@@ -22,7 +22,7 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
             this._options = cssLiveReloadOptions;
         }
 
-        public void TryAddWatch(string url)
+        public void TryAddWatch(string url, bool timeStampCheck = false, DateTime timeStamp = default)
         {
             var requestPath = PathString.FromUriComponent(new Uri(url));
             this.TryAddWatch(url, () =>
@@ -39,9 +39,18 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
                     return null;
                 }
             });
+
+            if (timeStampCheck == false) return;
+            if (this._watchTargetUrlToPath.TryGetValue(url, out var physicalPath) == false) return;
+
+            var fileTimeStamp = File.GetLastWriteTimeUtc(physicalPath);
+            if (timeStamp < fileTimeStamp)
+            {
+                this.CssFileChanged?.Invoke(this, new CssFileChangedEventArgs(url));
+            }
         }
 
-        public void TryAddWatch(string url, Func<string> getPyhisicalPath)
+        private void TryAddWatch(string url, Func<string> getPyhisicalPath)
         {
             if (this._watchTargetUrlToPath.ContainsKey(url)) return;
 

@@ -5,9 +5,13 @@
 
     const qq: { [key: string]: (null | number)[] } = {};
 
+    let connectedOnce = false;
+    let lastReloadedTime = new Date();
+
     conn.onopen = onConnected;
 
     conn.addEventListener('css-changed', (ev: any) => {
+        lastReloadedTime = new Date();
         const url = ev.data;
         if (typeof (qq[url]) === 'undefined') qq[url] = [];
         if (qq[url].length < 5) {
@@ -28,8 +32,12 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(hrefs)
+            body: JSON.stringify({ connectedOnce, lastReloadedTime, hrefs })
         })
+        if (connectedOnce === false) {
+            lastReloadedTime = new Date();
+            connectedOnce = true;
+        }
     }
 
     function reloadCSS(url: string): void {

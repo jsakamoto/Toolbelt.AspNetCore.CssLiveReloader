@@ -8,8 +8,11 @@ var Toolbelt;
             const apiBase = '/Toolbelt.AspNetCore.CssLiveReloader/';
             const conn = new EventSource(apiBase + 'EventSource');
             const qq = {};
+            let connectedOnce = false;
+            let lastReloadedTime = new Date();
             conn.onopen = onConnected;
             conn.addEventListener('css-changed', (ev) => {
+                lastReloadedTime = new Date();
                 const url = ev.data;
                 if (typeof (qq[url]) === 'undefined')
                     qq[url] = [];
@@ -30,8 +33,12 @@ var Toolbelt;
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(hrefs)
+                    body: JSON.stringify({ connectedOnce, lastReloadedTime, hrefs })
                 });
+                if (connectedOnce === false) {
+                    lastReloadedTime = new Date();
+                    connectedOnce = true;
+                }
             }
             function reloadCSS(url) {
                 const links = getLinks();

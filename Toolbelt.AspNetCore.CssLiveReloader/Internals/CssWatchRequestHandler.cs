@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -21,10 +22,11 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
                 return;
             }
 
-            var hrefs = await JsonSerializer.DeserializeAsync<string[]>(context.Request.Body);
-            foreach (var href in hrefs)
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var requestArgs = await JsonSerializer.DeserializeAsync<CssWatchRequestArgs>(context.Request.Body, option);
+            foreach (var href in requestArgs.Hrefs)
             {
-                cssFileWatcherService.TryAddWatch(href);
+                cssFileWatcherService.TryAddWatch(href, requestArgs.ConnectedOnce, requestArgs.LastReloadedTime);
             }
 
             context.Response.StatusCode = (int)HttpStatusCode.NoContent;
