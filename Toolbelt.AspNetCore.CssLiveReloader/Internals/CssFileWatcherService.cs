@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -9,13 +10,13 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 {
     internal class CssFileWatcherService : IDisposable
     {
-        private readonly ConcurrentDictionary<string, string> _watchTargetUrlToPath = new ConcurrentDictionary<string, string>();
+        private readonly ConcurrentDictionary<string, string> _watchTargetUrlToPath = new();
 
-        private readonly Dictionary<string, FileSystemWatcher> _fileSystemWatchers = new Dictionary<string, FileSystemWatcher>();
+        private readonly Dictionary<string, FileSystemWatcher> _fileSystemWatchers = new();
 
         private readonly CssLiveReloaderOptions _options;
 
-        public event EventHandler<CssFileChangedEventArgs> CssFileChanged;
+        public event EventHandler<CssFileChangedEventArgs>? CssFileChanged;
 
         public CssFileWatcherService(CssLiveReloaderOptions cssLiveReloadOptions)
         {
@@ -50,11 +51,13 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
             }
         }
 
-        private void TryAddWatch(string url, Func<string> getPyhisicalPath)
+        private void TryAddWatch(string url, Func<string?> getPyhisicalPath)
         {
             if (this._watchTargetUrlToPath.ContainsKey(url)) return;
 
             var pyhisicalPath = getPyhisicalPath();
+            if (pyhisicalPath == null) return;
+
             if (!this._watchTargetUrlToPath.TryAdd(url, pyhisicalPath)) return;
 
             if (string.IsNullOrEmpty(pyhisicalPath)) return;
