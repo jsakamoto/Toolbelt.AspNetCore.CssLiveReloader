@@ -8,6 +8,6 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 
         public DateTime LastReloadedTime { get; set; }
 
-        public string[] Hrefs { get; set; }
+        public string[]? Hrefs { get; set; }
     }
 }

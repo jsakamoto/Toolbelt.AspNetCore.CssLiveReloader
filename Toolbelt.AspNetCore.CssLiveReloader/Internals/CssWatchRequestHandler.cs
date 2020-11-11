@@ -24,7 +24,7 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 
             var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var requestArgs = await JsonSerializer.DeserializeAsync<CssWatchRequestArgs>(context.Request.Body, option);
-            foreach (var href in requestArgs.Hrefs)
+            foreach (var href in requestArgs.Hrefs ?? Enumerable.Empty<string>())
             {
                 cssFileWatcherService.TryAddWatch(href, requestArgs.ConnectedOnce, requestArgs.LastReloadedTime);
             }

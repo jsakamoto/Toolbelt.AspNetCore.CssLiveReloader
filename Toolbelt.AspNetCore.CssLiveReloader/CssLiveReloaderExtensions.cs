@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +15,7 @@ namespace Toolbelt.Extensions.DependencyInjection
     {
         public static IApplicationBuilder UseCssLiveReload(this IApplicationBuilder app) => UseCssLiveReload(app, null);
 
-        public static IApplicationBuilder UseCssLiveReload(this IApplicationBuilder app, Action<CssLiveReloaderOptions> configure)
+        public static IApplicationBuilder UseCssLiveReload(this IApplicationBuilder app, Action<CssLiveReloaderOptions>? configure)
         {
             var defaultStaticFileOptions = app.ApplicationServices.GetService<IOptions<StaticFileOptions>>();
             var hostingEnv = app.ApplicationServices.GetService<IHostingEnvironment>();
