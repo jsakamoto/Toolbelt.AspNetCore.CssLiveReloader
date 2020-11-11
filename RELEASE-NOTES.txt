@@ -1,3 +1,6 @@
+v.1.1.1
+- Fix: HTTP 500 happened when the page includes the CSS that comes from CDN.
+
 v.1.1.0
 - Improve robustness and stability of CSS reloading.
 - Improve reloading updated CSS during disconnected.
