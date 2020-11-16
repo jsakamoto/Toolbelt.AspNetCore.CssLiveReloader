@@ -1,3 +1,6 @@
+v.1.1.2
+- Fix: Typo in CSS loading code caused a spurious browser warning such as "The script...was loaded even though its MIME type (“text/jsavascript”) is not a valid JavaScript MIME type.".
+
 v.1.1.1
 - Fix: HTTP 500 happened when the page includes the CSS that comes from CDN.
 
