@@ -12,7 +12,7 @@
     <PackageOutputPath>..\_dist\</PackageOutputPath>
     <Copyright>Copyright © 2020 J.Sakamoto, Mozilla Public License 2.0</Copyright>
     <Authors>J.Sakamoto</Authors>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jsakamoto/Toolbelt.AspNetCore.CssLiveReloader/</PackageProjectUrl>
     <Description>CSS only live reloader library for ASP.NET Core (includes Blazor).</Description>
