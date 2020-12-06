@@ -14,7 +14,7 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
                 "Toolbelt.AspNetCore.CssLiveReloader.script.min.js";
 #endif
             using var resStream = typeof(CssLiveReloaderScriptHandler).Assembly.GetManifestResourceStream(resourceName);
-            context.Response.ContentType = "text/javascript";
+            context.Response.ContentType = "application/javascript";
             await resStream.CopyToAsync(context.Response.Body);
         }
     }
