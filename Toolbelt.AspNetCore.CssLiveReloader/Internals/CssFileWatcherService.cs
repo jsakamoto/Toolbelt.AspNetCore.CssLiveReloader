@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 {
-    internal class CssFileWatcherService : IDisposable
+    internal class CssFileWatcherService : IDisposable, ICssFileWatcherService
     {
         private readonly ConcurrentDictionary<string, string> _watchTargetUrlToPath = new();
 

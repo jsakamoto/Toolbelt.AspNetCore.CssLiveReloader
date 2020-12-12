@@ -8,9 +8,9 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
     {
         private readonly HttpContext _context;
 
-        private readonly CssFileWatcherService _cssFileWatcherService;
+        private readonly ICssFileWatcherService _cssFileWatcherService;
 
-        public CssChangedEventSourceHandler(HttpContext context, CssFileWatcherService cssFileWatcherService)
+        public CssChangedEventSourceHandler(HttpContext context, ICssFileWatcherService cssFileWatcherService)
         {
             this._context = context;
             this._cssFileWatcherService = cssFileWatcherService;

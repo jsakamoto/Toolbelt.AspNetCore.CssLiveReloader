@@ -11,11 +11,11 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
     {
         private readonly RequestDelegate _next;
 
-        private readonly CssFileWatcherService _cssFileWatcherService;
+        private readonly ICssFileWatcherService _cssFileWatcherService;
 
         public AddCssFileWatcherMiddleware(
             RequestDelegate next,
-            CssFileWatcherService cssFileWatcherService)
+            ICssFileWatcherService cssFileWatcherService)
         {
             _next = next;
             _cssFileWatcherService = cssFileWatcherService;

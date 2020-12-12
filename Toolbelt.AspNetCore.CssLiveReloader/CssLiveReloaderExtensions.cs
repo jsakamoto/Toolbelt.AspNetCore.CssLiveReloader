@@ -32,7 +32,7 @@ namespace Toolbelt.Extensions.DependencyInjection
 
             var cssFileWatcherService = new CssFileWatcherService(cssLiveReloadOptions);
 
-            app.UseMiddleware<AddCssFileWatcherMiddleware>(cssFileWatcherService);
+            app.UseMiddleware<AddCssFileWatcherMiddleware>(cssFileWatcherService as ICssFileWatcherService);
             app.UseMiddleware<InjectReloaderScriptMiddleware>(cssLiveReloadOptions);
             app.Map("/Toolbelt.AspNetCore.CssLiveReloader/EventSource", builder => builder.Run(context => new CssChangedEventSourceHandler(context, cssFileWatcherService).InvokeAsync()));
             app.Map("/Toolbelt.AspNetCore.CssLiveReloader/WatchRequest", builder => builder.Run(context => CssWatchRequestHandler.InvokeAsync(context, cssFileWatcherService)));

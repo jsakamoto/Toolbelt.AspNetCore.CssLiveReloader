@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -9,7 +8,7 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 {
     internal class CssWatchRequestHandler
     {
-        public static async Task InvokeAsync(HttpContext context, CssFileWatcherService cssFileWatcherService)
+        public static async Task InvokeAsync(HttpContext context, ICssFileWatcherService cssFileWatcherService)
         {
             if (!HttpMethods.IsPost(context.Request.Method))
             {
