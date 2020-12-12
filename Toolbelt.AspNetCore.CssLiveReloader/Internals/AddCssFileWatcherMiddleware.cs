@@ -27,8 +27,8 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 
             var httpStatus = (HttpStatusCode)context.Response.StatusCode;
             if (httpStatus != HttpStatusCode.OK && httpStatus != HttpStatusCode.NotModified) return;
-            if (context.Response.ContentType.Split(',', ';', ' ').FirstOrDefault() != "text/css") return;
             if (!HttpMethods.IsGet(context.Request.Method) && !HttpMethods.IsHead(context.Request.Method)) return;
+            if ((context.Response.ContentType ?? "").Split(',', ';', ' ').FirstOrDefault() != "text/css") return;
 
             var url = context.Request.GetDisplayUrl();
             url = Regex.Replace(url, @"(\?|&)(136bb8a9-b749-47e9-92e7-8b46e4a4f657=\d+&?)", "$1").TrimEnd('?', '&');
