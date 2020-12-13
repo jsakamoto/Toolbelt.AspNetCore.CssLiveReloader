@@ -1,3 +1,7 @@
+v.1.1.4
+- Fix: HTTP 500 happened when the incoming request doesn't have any content types.
+- Improved cache-control - expire CSS cache forcefully.
+
 v.1.1.3
 - Fix: CSS live reloader inject the JavaScript with an invalid MIME type.
 - Fix: CSS live reloader break filtered HTML in some cases.
