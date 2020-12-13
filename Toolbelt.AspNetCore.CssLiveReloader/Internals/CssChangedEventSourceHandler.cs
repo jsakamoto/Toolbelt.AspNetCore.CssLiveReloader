@@ -20,7 +20,7 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
         {
             _cssFileWatcherService.CssFileChanged += CssFileWatcherService_CssFileChanged;
 
-            _context.Response.ContentType = "text/event-stream";
+            _context.Response.ContentType = "text/event-stream; charset=utf-8";
 
             var bytes = Encoding.ASCII.GetBytes($"event: connected\n\n");
             await _context.Response.Body.WriteAsync(bytes, 0, bytes.Length);

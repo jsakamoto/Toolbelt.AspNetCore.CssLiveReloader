@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
@@ -26,6 +27,8 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
 
             try
             {
+                context.Response.OnStarting(SetCacheControlForCss, context);
+
                 await _next(context);
 
                 if (filter.IsCaptured())
@@ -50,6 +53,16 @@ namespace Toolbelt.AspNetCore.CssLiveReloader.Internals
             {
                 filter.RevertResponseBodyHooking();
             }
+        }
+
+        private Task SetCacheControlForCss(object arg)
+        {
+            var context = arg as HttpContext;
+            if (context != null && context.IsGetCssRequestAndResponce())
+            {
+                context.Response.Headers["Cache-Control"] = "no-store";
+            }
+            return Task.CompletedTask;
         }
     }
 }
